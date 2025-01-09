@@ -195,62 +195,42 @@ def a_star(graph, costs, heuristics, start, goal):
 
 ---
 
-## Funções Heurísticas
+### Funções Heurísticas
 
 As **funções heurísticas** são um componente essencial dos algoritmos de busca informada, como o **Best-First Search** e o **A***. Elas fornecem uma maneira de estimar quão perto um estado está do objetivo, ajudando os algoritmos a fazer escolhas mais inteligentes sobre qual caminho seguir. As heurísticas desempenham um papel crucial na eficiência e eficácia desses algoritmos, pois permitem que a busca seja orientada para as soluções mais promissoras, ao invés de explorar todos os caminhos de forma cega.
 
+
 ### Definição de Heurística
 
-Uma **heurística** é uma função \( h(n) \) que atribui um valor a cada nó \( n \) de um espaço de busca, indicando a "aproximidade" desse nó em relação ao objetivo. O valor retornado pela função heurística deve ser uma estimativa do custo para alcançar o objetivo a partir do estado \( n \).
+Uma **heurística** é uma função que atribui um valor a cada nó de um espaço de busca, indicando a "aproximidade" desse nó em relação ao objetivo. O valor retornado pela função heurística deve ser uma estimativa do custo para alcançar o objetivo a partir do estado avaliado.
 
 **Exemplos de funções heurísticas:**
-- **Distância Euclidiana ou Manhattan:** em problemas de navegação, a heurística pode ser a distância direta entre o nó atual e o objetivo (usando a fórmula de distância Euclidiana ou Manhattan, dependendo do tipo de movimento permitido).
-- **Número de blocos fora do lugar:** em problemas como o quebra-cabeça 8 (ou 15), a heurística pode ser o número de peças fora do lugar, ou seja, quantas peças precisam ser movidas para resolver o quebra-cabeça.
-- **Custo de ação restante:** em problemas de otimização, pode-se utilizar o custo estimado das ações restantes para alcançar o objetivo.
+- **Distância Euclidiana ou Manhattan:** Em problemas de navegação, a heurística pode ser a distância direta entre o nó atual e o objetivo. A escolha depende do tipo de movimento permitido.
+- **Número de blocos fora do lugar:** Em problemas como o quebra-cabeça 8 (ou 15), a heurística pode ser o número de peças fora do lugar, ou seja, quantas peças precisam ser movidas para resolver o quebra-cabeça.
+- **Custo de ação restante:** Em problemas de otimização, pode-se utilizar o custo estimado das ações restantes para alcançar o objetivo.
 
 A heurística precisa ser **admissível** e, em muitos casos, **consistente** (também chamada de **monótona**) para garantir que o algoritmo A* seja ótimo:
 
-- **Admissibilidade:** Uma heurística é admissível se nunca superestima o custo real de alcançar o objetivo. Ou seja, para qualquer nó \( n \), a heurística \( h(n) \) deve ser menor ou igual ao custo real mínimo de \( n \) até o objetivo.
-- **Consistência (ou Monotonicidade):** Uma heurística é consistente se, para cada nó \( n \) e cada sucessor \( n' \) de \( n \), a diferença entre a heurística de \( n \) e \( n' \) não for maior do que o custo real para ir de \( n \) para \( n' \). Formalmente, isso significa que:  
-  \( h(n) \leq c(n, n') + h(n') \),  
-  onde \( c(n, n') \) é o custo real de mover de \( n \) para \( n' \).
+- **Admissibilidade:** Uma heurística é admissível se nunca superestima o custo real de alcançar o objetivo. Isso significa que, para qualquer nó, o valor estimado pela heurística deve ser menor ou igual ao custo real mínimo até o objetivo.
+- **Consistência (ou Monotonicidade):** Uma heurística é consistente se, para cada nó e cada sucessor do nó, a diferença entre os valores heurísticos não for maior do que o custo real de mover entre eles.
+
 
 ### Exemplos de Funções Heurísticas
 
-Aqui estão alguns exemplos de funções heurísticas usadas em algoritmos de busca, com base em diferentes tipos de problemas.
+1. **Distância Euclidiana (para navegação em um espaço 2D):**  
+   Usada em problemas de navegação em um espaço contínuo, considerando a distância direta entre o nó atual e o objetivo.
 
-1. **Distância Euclidiana (para navegação em um espaço 2D):**
+2. **Distância Manhattan (para navegação em um espaço 2D com movimento em grade):**  
+   Aplicável em grades, quando o movimento é restrito a direções horizontais e verticais, acumulando as distâncias percorridas em cada eixo.
 
-   Para problemas de navegação em um espaço contínuo, a heurística pode ser a distância direta entre o nó atual e o objetivo. A fórmula da distância Euclidiana em 2D é:
-   \[
-   h(n) = \sqrt{(x_n - x_{goal})^2 + (y_n - y_{goal})^2}
-   \]
-   Onde \( (x_n, y_n) \) são as coordenadas do nó atual e \( (x_{goal}, y_{goal}) \) são as coordenadas do objetivo.
+3. **Número de blocos fora do lugar (para o quebra-cabeça 8 ou 15):**  
+   Considera o número de peças que estão fora das suas posições corretas. É uma estimativa simples e eficaz para medir o progresso em direção à solução.
 
-2. **Distância Manhattan (para navegação em um espaço 2D com movimento em grade):**
-
-   A distância Manhattan é uma heurística comum quando o movimento é restrito a uma grade (onde se pode mover apenas na horizontal ou vertical). A fórmula é:
-   \[
-   h(n) = |x_n - x_{goal}| + |y_n - y_{goal}|
-   \]
-   Ela calcula a soma das distâncias absolutas nas direções horizontal e vertical.
-
-3. **Número de blocos fora do lugar (para o quebra-cabeça 8 ou 15):**
-
-   Em problemas como o quebra-cabeça, a heurística pode ser o número de peças que não estão no lugar correto. Para cada configuração do quebra-cabeça, o valor da heurística seria o número de peças fora do lugar.
-
-   Por exemplo, em um quebra-cabeça 8:
-   \[
-   h(n) = \text{número de peças fora do lugar}
-   \]
-
-4. **Custo de ações restantes (em problemas de otimização):**
-
-   Em alguns problemas de otimização, a heurística pode ser o custo estimado para completar uma solução. Por exemplo, em um problema de **roteamento de veículos**, a heurística pode ser o custo estimado para percorrer o restante do percurso a partir do nó atual até o destino.
+4. **Custo de ações restantes (em problemas de otimização):**  
+   Em problemas como roteamento de veículos, essa heurística pode estimar o custo das ações restantes necessárias para alcançar o objetivo.
 
 
-As funções heurísticas são ferramentas poderosas para guiar a busca em problemas complexos. Elas permitem que os algoritmos de busca informada, como o **A***, escolham de forma inteligente os caminhos mais promissores, melhorando a eficiência e a precisão na busca pela solução ótima. A escolha da heurística adequada é crucial para o desempenho do algoritmo, e deve ser cuidadosamente escolhida com base nas características do problema em questão.
-
+#### As funções heurísticas são ferramentas poderosas para guiar a busca em problemas complexos. Elas permitem que os algoritmos de busca informada, como o **A***, escolham de forma inteligente os caminhos mais promissores, melhorando a eficiência e a precisão na busca pela solução ótima. A escolha da heurística adequada é crucial para o desempenho do algoritmo, e deve ser cuidadosamente selecionada com base nas características do problema em questão.
 ---
 
 ## Busca em Ambientes Complexos
