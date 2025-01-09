@@ -469,20 +469,14 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#funcoes-heuristicas" class="md-nav__link">
     <span class="md-ellipsis">
       Funções Heurísticas
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Funções Heurísticas">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#definicao-de-heuristica" class="md-nav__link">
@@ -499,6 +493,21 @@
       Exemplos de Funções Heurísticas
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Exemplos de Funções Heurísticas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#as-funcoes-heuristicas-sao-ferramentas-poderosas-para-guiar-a-busca-em-problemas-complexos-elas-permitem-que-os-algoritmos-de-busca-informada-como-o-a-escolham-de-forma-inteligente-os-caminhos-mais-promissores-melhorando-a-eficiencia-e-a-precisao-na-busca-pela-solucao-otima-a-escolha-da-heuristica-adequada-e-crucial-para-o-desempenho-do-algoritmo-e-deve-ser-cuidadosamente-selecionada-com-base-nas-caracteristicas-do-problema-em-questao" class="md-nav__link">
+    <span class="md-ellipsis">
+      As funções heurísticas são ferramentas poderosas para guiar a busca em problemas complexos. Elas permitem que os algoritmos de busca informada, como o A*, escolham de forma inteligente os caminhos mais promissores, melhorando a eficiência e a precisão na busca pela solução ótima. A escolha da heurística adequada é crucial para o desempenho do algoritmo, e deve ser cuidadosamente selecionada com base nas características do problema em questão.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -766,52 +775,39 @@ def best_first_search(graph, heuristics, start, goal):
     return None  # Nenhum caminho encontrado
 </code></pre>
 <hr />
-<h2 id="funcoes-heuristicas">Funções Heurísticas</h2>
+<h3 id="funcoes-heuristicas">Funções Heurísticas</h3>
 <p>As <strong>funções heurísticas</strong> são um componente essencial dos algoritmos de busca informada, como o <strong>Best-First Search</strong> e o <strong>A</strong>*. Elas fornecem uma maneira de estimar quão perto um estado está do objetivo, ajudando os algoritmos a fazer escolhas mais inteligentes sobre qual caminho seguir. As heurísticas desempenham um papel crucial na eficiência e eficácia desses algoritmos, pois permitem que a busca seja orientada para as soluções mais promissoras, ao invés de explorar todos os caminhos de forma cega.</p>
 <h3 id="definicao-de-heuristica">Definição de Heurística</h3>
-<p>Uma <strong>heurística</strong> é uma função ( h(n) ) que atribui um valor a cada nó ( n ) de um espaço de busca, indicando a "aproximidade" desse nó em relação ao objetivo. O valor retornado pela função heurística deve ser uma estimativa do custo para alcançar o objetivo a partir do estado ( n ).</p>
+<p>Uma <strong>heurística</strong> é uma função que atribui um valor a cada nó de um espaço de busca, indicando a "aproximidade" desse nó em relação ao objetivo. O valor retornado pela função heurística deve ser uma estimativa do custo para alcançar o objetivo a partir do estado avaliado.</p>
 <p><strong>Exemplos de funções heurísticas:</strong>
-- <strong>Distância Euclidiana ou Manhattan:</strong> em problemas de navegação, a heurística pode ser a distância direta entre o nó atual e o objetivo (usando a fórmula de distância Euclidiana ou Manhattan, dependendo do tipo de movimento permitido).
-- <strong>Número de blocos fora do lugar:</strong> em problemas como o quebra-cabeça 8 (ou 15), a heurística pode ser o número de peças fora do lugar, ou seja, quantas peças precisam ser movidas para resolver o quebra-cabeça.
-- <strong>Custo de ação restante:</strong> em problemas de otimização, pode-se utilizar o custo estimado das ações restantes para alcançar o objetivo.</p>
+- <strong>Distância Euclidiana ou Manhattan:</strong> Em problemas de navegação, a heurística pode ser a distância direta entre o nó atual e o objetivo. A escolha depende do tipo de movimento permitido.
+- <strong>Número de blocos fora do lugar:</strong> Em problemas como o quebra-cabeça 8 (ou 15), a heurística pode ser o número de peças fora do lugar, ou seja, quantas peças precisam ser movidas para resolver o quebra-cabeça.
+- <strong>Custo de ação restante:</strong> Em problemas de otimização, pode-se utilizar o custo estimado das ações restantes para alcançar o objetivo.</p>
 <p>A heurística precisa ser <strong>admissível</strong> e, em muitos casos, <strong>consistente</strong> (também chamada de <strong>monótona</strong>) para garantir que o algoritmo A* seja ótimo:</p>
 <ul>
-<li><strong>Admissibilidade:</strong> Uma heurística é admissível se nunca superestima o custo real de alcançar o objetivo. Ou seja, para qualquer nó ( n ), a heurística ( h(n) ) deve ser menor ou igual ao custo real mínimo de ( n ) até o objetivo.</li>
-<li><strong>Consistência (ou Monotonicidade):</strong> Uma heurística é consistente se, para cada nó ( n ) e cada sucessor ( n' ) de ( n ), a diferença entre a heurística de ( n ) e ( n' ) não for maior do que o custo real para ir de ( n ) para ( n' ). Formalmente, isso significa que:<br />
-  ( h(n) \leq c(n, n') + h(n') ),<br />
-  onde ( c(n, n') ) é o custo real de mover de ( n ) para ( n' ).</li>
+<li><strong>Admissibilidade:</strong> Uma heurística é admissível se nunca superestima o custo real de alcançar o objetivo. Isso significa que, para qualquer nó, o valor estimado pela heurística deve ser menor ou igual ao custo real mínimo até o objetivo.</li>
+<li><strong>Consistência (ou Monotonicidade):</strong> Uma heurística é consistente se, para cada nó e cada sucessor do nó, a diferença entre os valores heurísticos não for maior do que o custo real de mover entre eles.</li>
 </ul>
 <h3 id="exemplos-de-funcoes-heuristicas">Exemplos de Funções Heurísticas</h3>
-<p>Aqui estão alguns exemplos de funções heurísticas usadas em algoritmos de busca, com base em diferentes tipos de problemas.</p>
 <ol>
-<li><strong>Distância Euclidiana (para navegação em um espaço 2D):</strong></li>
+<li>
+<p><strong>Distância Euclidiana (para navegação em um espaço 2D):</strong><br />
+   Usada em problemas de navegação em um espaço contínuo, considerando a distância direta entre o nó atual e o objetivo.</p>
+</li>
+<li>
+<p><strong>Distância Manhattan (para navegação em um espaço 2D com movimento em grade):</strong><br />
+   Aplicável em grades, quando o movimento é restrito a direções horizontais e verticais, acumulando as distâncias percorridas em cada eixo.</p>
+</li>
+<li>
+<p><strong>Número de blocos fora do lugar (para o quebra-cabeça 8 ou 15):</strong><br />
+   Considera o número de peças que estão fora das suas posições corretas. É uma estimativa simples e eficaz para medir o progresso em direção à solução.</p>
+</li>
+<li>
+<p><strong>Custo de ações restantes (em problemas de otimização):</strong><br />
+   Em problemas como roteamento de veículos, essa heurística pode estimar o custo das ações restantes necessárias para alcançar o objetivo.</p>
+</li>
 </ol>
-<p>Para problemas de navegação em um espaço contínuo, a heurística pode ser a distância direta entre o nó atual e o objetivo. A fórmula da distância Euclidiana em 2D é:
-   [
-   h(n) = \sqrt{(x_n - x_{goal})^2 + (y_n - y_{goal})^2}
-   ]
-   Onde ( (x_n, y_n) ) são as coordenadas do nó atual e ( (x_{goal}, y_{goal}) ) são as coordenadas do objetivo.</p>
-<ol>
-<li><strong>Distância Manhattan (para navegação em um espaço 2D com movimento em grade):</strong></li>
-</ol>
-<p>A distância Manhattan é uma heurística comum quando o movimento é restrito a uma grade (onde se pode mover apenas na horizontal ou vertical). A fórmula é:
-   [
-   h(n) = |x_n - x_{goal}| + |y_n - y_{goal}|
-   ]
-   Ela calcula a soma das distâncias absolutas nas direções horizontal e vertical.</p>
-<ol>
-<li><strong>Número de blocos fora do lugar (para o quebra-cabeça 8 ou 15):</strong></li>
-</ol>
-<p>Em problemas como o quebra-cabeça, a heurística pode ser o número de peças que não estão no lugar correto. Para cada configuração do quebra-cabeça, o valor da heurística seria o número de peças fora do lugar.</p>
-<p>Por exemplo, em um quebra-cabeça 8:
-   [
-   h(n) = \text{número de peças fora do lugar}
-   ]</p>
-<ol>
-<li><strong>Custo de ações restantes (em problemas de otimização):</strong></li>
-</ol>
-<p>Em alguns problemas de otimização, a heurística pode ser o custo estimado para completar uma solução. Por exemplo, em um problema de <strong>roteamento de veículos</strong>, a heurística pode ser o custo estimado para percorrer o restante do percurso a partir do nó atual até o destino.</p>
-<p>As funções heurísticas são ferramentas poderosas para guiar a busca em problemas complexos. Elas permitem que os algoritmos de busca informada, como o <strong>A</strong>*, escolham de forma inteligente os caminhos mais promissores, melhorando a eficiência e a precisão na busca pela solução ótima. A escolha da heurística adequada é crucial para o desempenho do algoritmo, e deve ser cuidadosamente escolhida com base nas características do problema em questão.</p>
+<h4 id="as-funcoes-heuristicas-sao-ferramentas-poderosas-para-guiar-a-busca-em-problemas-complexos-elas-permitem-que-os-algoritmos-de-busca-informada-como-o-a-escolham-de-forma-inteligente-os-caminhos-mais-promissores-melhorando-a-eficiencia-e-a-precisao-na-busca-pela-solucao-otima-a-escolha-da-heuristica-adequada-e-crucial-para-o-desempenho-do-algoritmo-e-deve-ser-cuidadosamente-selecionada-com-base-nas-caracteristicas-do-problema-em-questao">As funções heurísticas são ferramentas poderosas para guiar a busca em problemas complexos. Elas permitem que os algoritmos de busca informada, como o <strong>A</strong>*, escolham de forma inteligente os caminhos mais promissores, melhorando a eficiência e a precisão na busca pela solução ótima. A escolha da heurística adequada é crucial para o desempenho do algoritmo, e deve ser cuidadosamente selecionada com base nas características do problema em questão.</h4>
 <hr />
 <h2 id="busca-em-ambientes-complexos">Busca em Ambientes Complexos</h2>
 <p>Em alguns problemas de Inteligência Artificial, a busca no espaço de estados não se concentra na trajetória ou caminho percorrido até o objetivo, mas sim no próprio <strong>estado final</strong> que atende às condições de sucesso. Isso é particularmente importante em problemas onde o objetivo final é mais relevante do que o caminho para alcançá-lo.</p>
